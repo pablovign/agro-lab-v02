@@ -5,6 +5,7 @@ import com.G6.agro_lab_v02.dtos.peticiones.EmpresaRegistroDTO;
 import com.G6.agro_lab_v02.dtos.respuestas.EmpresaRespuestaDTO;
 import com.G6.agro_lab_v02.entidades.Empresa;
 import com.G6.agro_lab_v02.excepciones.BadRequestException;
+import com.G6.agro_lab_v02.excepciones.ResourceNotFoundException;
 import com.G6.agro_lab_v02.repositorios.RepositorioEmpresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,6 +35,12 @@ public class ServicioEmpresa {
         empresa.setContrasenia(passwordEncoder.encode(dto.getContrasenia()));
         repositorioEmpresa.save(empresa);
 
+        return MapeadorEmpresa.toDTO(empresa);
+    }
+
+    public EmpresaRespuestaDTO obtenerEmpresa(String cuit){
+        Empresa empresa = repositorioEmpresa.findByCuit(cuit)
+                .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada."));
         return MapeadorEmpresa.toDTO(empresa);
     }
 }
