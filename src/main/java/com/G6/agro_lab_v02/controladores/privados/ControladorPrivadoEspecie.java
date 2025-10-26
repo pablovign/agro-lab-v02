@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/privado/especies")
 public class ControladorPrivadoEspecie {
-    private ServicioEspecie servicioEspecie;
+    private final ServicioEspecie servicioEspecie;
 
     @Autowired
     public ControladorPrivadoEspecie(ServicioEspecie servicioEspecie){
