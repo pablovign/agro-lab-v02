@@ -43,6 +43,13 @@ public class MapeadorEstablecimiento {
                 .map(Especie::getNombreEspecie)
                 .toList();
 
+        double latitud = 0;
+        double longitud = 0;
+        if (establecimiento.getUbicacion() != null) {
+            latitud = establecimiento.getUbicacion().getY();
+            longitud = establecimiento.getUbicacion().getX();
+        }
+
         return new EstablecimientoRespuestaDTO(
                 establecimiento.getIdEstablecimiento(),
                 establecimiento.getNombreEstablecimiento(),
@@ -51,7 +58,9 @@ public class MapeadorEstablecimiento {
                 establecimiento.getCodigoPostal(),
                 nombreDistrito,
                 nombreDepartamento,
-                especies
+                especies,
+                latitud,
+                longitud
         );
     }
 }
