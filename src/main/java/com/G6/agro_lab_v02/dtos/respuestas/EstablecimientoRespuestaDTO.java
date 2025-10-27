@@ -11,9 +11,12 @@ public class EstablecimientoRespuestaDTO {
     private String nombreDistrito;
     private String nombreDepartamento;
     private List<String> especies;
+    private double latitud;
+    private double longitud;
 
     public EstablecimientoRespuestaDTO(Integer idEstablecimiento, String nombreEstablecimiento, String calle, String numeracion,
-                                       String codigoPostal, String nombreDistrito, String nombreDepartamento, List<String> especies) {
+                                       String codigoPostal, String nombreDistrito, String nombreDepartamento, List<String> especies,
+                                       double latitud, double longitud) {
         this.idEstablecimiento = idEstablecimiento;
         this.nombreEstablecimiento = nombreEstablecimiento;
         this.calle = calle;
@@ -22,6 +25,8 @@ public class EstablecimientoRespuestaDTO {
         this.nombreDistrito = nombreDistrito;
         this.nombreDepartamento = nombreDepartamento;
         this.especies = especies;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public Integer getIdEstablecimiento() {
@@ -86,5 +91,21 @@ public class EstablecimientoRespuestaDTO {
 
     public void setEspecies(List<String> especies) {
         this.especies = especies;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
     }
 }

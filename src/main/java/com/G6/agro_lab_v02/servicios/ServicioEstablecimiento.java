@@ -52,4 +52,15 @@ public class ServicioEstablecimiento {
 
         return MapeadorEstablecimiento.toDto(guardado);
     }
+
+    public List<EstablecimientoRespuestaDTO> listarPorEmpresa(String cuit) {
+        Empresa empresa = repositorioEmpresa.findByCuit(cuit)
+                .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada."));
+
+        List<Establecimiento> establecimientos = repositorioEstablecimiento.findByEmpresaAndFechaBajaIsNull(empresa);
+
+        return establecimientos.stream()
+                .map(MapeadorEstablecimiento::toDto)
+                .toList();
+    }
 }
