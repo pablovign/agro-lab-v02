@@ -12,11 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/privado/ofertas-empleo")
-public class ControladorPrivadoOfertaEmpleoPriv {
+public class ControladorPrivadoOfertaEmpleo {
     private final ServicioOfertaEmpleo servicioOfertaEmpleo;
 
     @Autowired
-    public ControladorPrivadoOfertaEmpleoPriv(ServicioOfertaEmpleo servicioOfertaEmpleo){
+    public ControladorPrivadoOfertaEmpleo(ServicioOfertaEmpleo servicioOfertaEmpleo){
         this.servicioOfertaEmpleo = servicioOfertaEmpleo;
     }
 
