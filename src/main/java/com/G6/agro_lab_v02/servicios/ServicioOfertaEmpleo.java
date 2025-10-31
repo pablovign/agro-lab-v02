@@ -52,11 +52,18 @@ public class ServicioOfertaEmpleo {
     }
 
     @Transactional(readOnly = true)
-    public List<OfertaEmpleoRespuestaPrivDTO> listarPorEmpresa(String cuit) {
+    public List<OfertaEmpleoRespuestaPrivDTO> listarPorEmpresa(String cuit, Boolean vigente) {
         Empresa empresa = repositorioEmpresa.findByCuit(cuit)
                 .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada."));
 
-        List<OfertaEmpleo> ofertas = repositorioOfertaEmpleo.findByEstablecimiento_Empresa(empresa);
+        List<OfertaEmpleo> ofertas;
+
+        if(Boolean.TRUE.equals(vigente)){
+            ofertas = repositorioOfertaEmpleo.findByEstablecimiento_EmpresaAndVigenteTrue(empresa);
+        }
+        else{
+            ofertas = repositorioOfertaEmpleo.findByEstablecimiento_Empresa(empresa);
+        }
 
         return ofertas.stream()
                 .map(MapeadorOfertaEmpleoPriv::toDto)

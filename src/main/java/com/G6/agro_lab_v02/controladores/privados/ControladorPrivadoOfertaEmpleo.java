@@ -27,9 +27,10 @@ public class ControladorPrivadoOfertaEmpleo {
     }
 
     @GetMapping
-    public ResponseEntity<List<OfertaEmpleoRespuestaPrivDTO>> listarPorEmpresa(Authentication authentication) {
+    public ResponseEntity<List<OfertaEmpleoRespuestaPrivDTO>> listarPorEmpresa(Authentication authentication,
+                                                                               @RequestParam(name = "vigente", required = false) Boolean vigente) {
         String cuit = authentication.getName();
-        List<OfertaEmpleoRespuestaPrivDTO> respuesta = servicioOfertaEmpleo.listarPorEmpresa(cuit);
+        List<OfertaEmpleoRespuestaPrivDTO> respuesta = servicioOfertaEmpleo.listarPorEmpresa(cuit, vigente);
         return ResponseEntity.ok(respuesta);
     }
 }

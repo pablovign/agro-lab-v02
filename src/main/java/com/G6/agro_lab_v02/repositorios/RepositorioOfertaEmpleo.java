@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface RepositorioOfertaEmpleo extends JpaRepository<OfertaEmpleo, Integer> {
     List<OfertaEmpleo> findByEstablecimiento_Empresa(Empresa empresa);
+    List<OfertaEmpleo> findByEstablecimiento_EmpresaAndVigenteTrue(Empresa empresa);
 }
