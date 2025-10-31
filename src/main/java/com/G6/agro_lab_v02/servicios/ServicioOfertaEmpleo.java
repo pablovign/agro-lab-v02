@@ -1,8 +1,10 @@
 package com.G6.agro_lab_v02.servicios;
 
 import com.G6.agro_lab_v02.dtos.mapeadores.MapeadorOfertaEmpleoPriv;
+import com.G6.agro_lab_v02.dtos.mapeadores.MapeadorOfertaEmpleoPub;
 import com.G6.agro_lab_v02.dtos.peticiones.OfertaEmpleoRegistroDTO;
 import com.G6.agro_lab_v02.dtos.respuestas.OfertaEmpleoRespuestaPrivDTO;
+import com.G6.agro_lab_v02.dtos.respuestas.OfertaEmpleoRespuestaPubDTO;
 import com.G6.agro_lab_v02.entidades.*;
 import com.G6.agro_lab_v02.excepciones.ResourceNotFoundException;
 import com.G6.agro_lab_v02.repositorios.*;
