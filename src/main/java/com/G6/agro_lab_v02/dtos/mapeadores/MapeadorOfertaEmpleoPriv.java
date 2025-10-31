@@ -1,13 +1,13 @@
 package com.G6.agro_lab_v02.dtos.mapeadores;
 
 import com.G6.agro_lab_v02.dtos.peticiones.OfertaEmpleoRegistroDTO;
-import com.G6.agro_lab_v02.dtos.respuestas.OfertaEmpleoRespuestaDTO;
+import com.G6.agro_lab_v02.dtos.respuestas.OfertaEmpleoRespuestaPrivDTO;
 import com.G6.agro_lab_v02.entidades.Especie;
 import com.G6.agro_lab_v02.entidades.Establecimiento;
 import com.G6.agro_lab_v02.entidades.OfertaEmpleo;
 import com.G6.agro_lab_v02.entidades.PuestoTrabajo;
 
-public class MapeadorOfertaEmpleo {
+public class MapeadorOfertaEmpleoPriv {
     public static OfertaEmpleo toEntity(OfertaEmpleoRegistroDTO dto,
                                         Establecimiento establecimiento,
                                         PuestoTrabajo puestoTrabajo,
@@ -23,8 +23,8 @@ public class MapeadorOfertaEmpleo {
         return oferta;
     }
 
-    public static OfertaEmpleoRespuestaDTO toDto(OfertaEmpleo oferta) {
-        return new OfertaEmpleoRespuestaDTO(
+    public static OfertaEmpleoRespuestaPrivDTO toDto(OfertaEmpleo oferta) {
+        return new OfertaEmpleoRespuestaPrivDTO(
                 oferta.getIdOfertaEmpleo(),
                 oferta.getPuestoTrabajo().getNombrePuestoTrabajo(),
                 oferta.getEstablecimiento().getNombreEstablecimiento(),

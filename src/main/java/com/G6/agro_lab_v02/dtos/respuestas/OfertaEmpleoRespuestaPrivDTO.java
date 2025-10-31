@@ -3,7 +3,7 @@ package com.G6.agro_lab_v02.dtos.respuestas;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class OfertaEmpleoRespuestaDTO {
+public class OfertaEmpleoRespuestaPrivDTO {
     private Integer idOfertaEmpleo;
     private String nombrePuesto;
     private String nombreEstablecimiento;
@@ -13,9 +13,9 @@ public class OfertaEmpleoRespuestaDTO {
     private LocalDateTime fechaAlta;
     private LocalDate fechaCierre;
 
-    public OfertaEmpleoRespuestaDTO(Integer idOfertaEmpleo, String nombrePuesto, String nombreEstablecimiento,
-                                    String nombreEspecie, Integer vacantes, Boolean vigente,
-                                    LocalDateTime fechaAlta, LocalDate fechaCierre) {
+    public OfertaEmpleoRespuestaPrivDTO(Integer idOfertaEmpleo, String nombrePuesto, String nombreEstablecimiento,
+                                        String nombreEspecie, Integer vacantes, Boolean vigente,
+                                        LocalDateTime fechaAlta, LocalDate fechaCierre) {
         this.idOfertaEmpleo = idOfertaEmpleo;
         this.nombrePuesto = nombrePuesto;
         this.nombreEstablecimiento = nombreEstablecimiento;

@@ -1,19 +1,15 @@
 package com.G6.agro_lab_v02.servicios;
 
-import com.G6.agro_lab_v02.dtos.mapeadores.MapeadorOfertaEmpleo;
+import com.G6.agro_lab_v02.dtos.mapeadores.MapeadorOfertaEmpleoPriv;
 import com.G6.agro_lab_v02.dtos.peticiones.OfertaEmpleoRegistroDTO;
-import com.G6.agro_lab_v02.dtos.respuestas.OfertaEmpleoRespuestaDTO;
-import com.G6.agro_lab_v02.entidades.Especie;
-import com.G6.agro_lab_v02.entidades.Establecimiento;
-import com.G6.agro_lab_v02.entidades.OfertaEmpleo;
-import com.G6.agro_lab_v02.entidades.PuestoTrabajo;
+import com.G6.agro_lab_v02.dtos.respuestas.OfertaEmpleoRespuestaPrivDTO;
+import com.G6.agro_lab_v02.entidades.*;
 import com.G6.agro_lab_v02.excepciones.ResourceNotFoundException;
-import com.G6.agro_lab_v02.repositorios.RepositorioEspecie;
-import com.G6.agro_lab_v02.repositorios.RepositorioEstablecimiento;
-import com.G6.agro_lab_v02.repositorios.RepositorioOfertaEmpleo;
-import com.G6.agro_lab_v02.repositorios.RepositorioPuestoTrabajo;
+import com.G6.agro_lab_v02.repositorios.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ServicioOfertaEmpleo {
@@ -21,19 +17,20 @@ public class ServicioOfertaEmpleo {
     private final RepositorioEstablecimiento repositorioEstablecimiento;
     private final RepositorioPuestoTrabajo repositorioPuestoTrabajo;
     private final RepositorioEspecie repositorioEspecie;
+    private final RepositorioEmpresa repositorioEmpresa;
 
-    public ServicioOfertaEmpleo(RepositorioOfertaEmpleo repositorioOfertaEmpleo,
-                                RepositorioEstablecimiento repositorioEstablecimiento,
-                                RepositorioPuestoTrabajo repositorioPuestoTrabajo,
-                                RepositorioEspecie repositorioEspecie) {
+    public ServicioOfertaEmpleo(RepositorioOfertaEmpleo repositorioOfertaEmpleo, RepositorioEstablecimiento repositorioEstablecimiento,
+                                RepositorioPuestoTrabajo repositorioPuestoTrabajo, RepositorioEspecie repositorioEspecie,
+                                RepositorioEmpresa repositorioEmpresa) {
         this.repositorioOfertaEmpleo = repositorioOfertaEmpleo;
         this.repositorioEstablecimiento = repositorioEstablecimiento;
         this.repositorioPuestoTrabajo = repositorioPuestoTrabajo;
         this.repositorioEspecie = repositorioEspecie;
+        this.repositorioEmpresa = repositorioEmpresa;
     }
 
     @Transactional
-    public OfertaEmpleoRespuestaDTO registrarOferta(OfertaEmpleoRegistroDTO dto) {
+    public OfertaEmpleoRespuestaPrivDTO registrarOferta(OfertaEmpleoRegistroDTO dto) {
         Establecimiento establecimiento = repositorioEstablecimiento.findById(dto.getIdEstablecimiento())
                 .orElseThrow(() -> new ResourceNotFoundException("Establecimiento no encontrado."));
 
@@ -46,9 +43,21 @@ public class ServicioOfertaEmpleo {
                     .orElseThrow(() -> new ResourceNotFoundException("Especie no encontrada."));
         }
 
-        OfertaEmpleo oferta = MapeadorOfertaEmpleo.toEntity(dto, establecimiento, puesto, especie);
+        OfertaEmpleo oferta = MapeadorOfertaEmpleoPriv.toEntity(dto, establecimiento, puesto, especie);
         OfertaEmpleo guardada = repositorioOfertaEmpleo.save(oferta);
 
-        return MapeadorOfertaEmpleo.toDto(guardada);
+        return MapeadorOfertaEmpleoPriv.toDto(guardada);
+    }
+
+    @Transactional(readOnly = true)
+    public List<OfertaEmpleoRespuestaPrivDTO> listarPorEmpresa(String cuit) {
+        Empresa empresa = repositorioEmpresa.findByCuit(cuit)
+                .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada."));
+
+        List<OfertaEmpleo> ofertas = repositorioOfertaEmpleo.findByEstablecimiento_Empresa(empresa);
+
+        return ofertas.stream()
+                .map(MapeadorOfertaEmpleoPriv::toDto)
+                .toList();
     }
 }
