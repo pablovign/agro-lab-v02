@@ -69,4 +69,26 @@ public class ServicioOfertaEmpleo {
                 .map(MapeadorOfertaEmpleoPriv::toDto)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<OfertaEmpleoRespuestaPubDTO> listarVigentesFiltradas(String puesto, String orden, Double lat, Double lon) {
+        List<OfertaEmpleo> ofertas;
+
+        if ("distancia".equalsIgnoreCase(orden) && lat != null && lon != null) {
+            ofertas = repositorioOfertaEmpleo.findVigentesOrderByDistancia(lat, lon);
+        } else {
+            // Orden por fecha de cierre descendente (default)
+            ofertas = repositorioOfertaEmpleo.findByVigenteTrueOrderByFechaCierreDesc();
+        }
+
+        if (puesto != null && !puesto.isBlank()) {
+            ofertas = ofertas.stream()
+                    .filter(o -> o.getPuestoTrabajo().getNombrePuestoTrabajo().equalsIgnoreCase(puesto))
+                    .toList();
+        }
+
+        return ofertas.stream()
+                .map(MapeadorOfertaEmpleoPub::toDto)
+                .toList();
+    }
 }

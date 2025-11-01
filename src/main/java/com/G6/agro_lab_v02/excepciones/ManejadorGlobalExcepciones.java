@@ -50,6 +50,7 @@ public class ManejadorGlobalExcepciones {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGeneric(Exception ex) {
+        ex.printStackTrace();
         Map<String, Object> body = new HashMap<>();
         body.put("error", "Ocurrió un error interno");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
