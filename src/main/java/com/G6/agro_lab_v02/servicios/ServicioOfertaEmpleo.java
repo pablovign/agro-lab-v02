@@ -77,7 +77,6 @@ public class ServicioOfertaEmpleo {
         if ("distancia".equalsIgnoreCase(orden) && lat != null && lon != null) {
             ofertas = repositorioOfertaEmpleo.findVigentesOrderByDistancia(lat, lon);
         } else {
-            // Orden por fecha de cierre descendente (default)
             ofertas = repositorioOfertaEmpleo.findByVigenteTrueOrderByFechaCierreDesc();
         }
 
