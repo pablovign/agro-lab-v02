@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface RepositorioOfertaEmpleo extends JpaRepository<OfertaEmpleo, Integer> {
     List<OfertaEmpleo> findByEstablecimiento_Empresa(Empresa empresa);
+
     List<OfertaEmpleo> findByEstablecimiento_EmpresaAndVigenteTrue(Empresa empresa);
     @Query(value = """
         SELECT oe.* 
@@ -23,4 +24,6 @@ public interface RepositorioOfertaEmpleo extends JpaRepository<OfertaEmpleo, Int
     List<OfertaEmpleo> findVigentesOrderByDistancia(@Param("lat") Double lat, @Param("lon") Double lon);
 
     List<OfertaEmpleo> findByVigenteTrueOrderByFechaCierreDesc();
+
+    List<OfertaEmpleo> findByVigenteTrue();
 }

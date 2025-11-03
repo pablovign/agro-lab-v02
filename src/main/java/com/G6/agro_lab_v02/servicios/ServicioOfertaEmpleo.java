@@ -11,6 +11,7 @@ import com.G6.agro_lab_v02.repositorios.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -53,6 +54,8 @@ public class ServicioOfertaEmpleo {
 
     @Transactional(readOnly = true)
     public List<OfertaEmpleoRespuestaPrivDTO> listarPorEmpresa(String cuit, Boolean vigente) {
+        actualizarVigenciaAutomatica();
+
         Empresa empresa = repositorioEmpresa.findByCuit(cuit)
                 .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada."));
 
@@ -72,6 +75,8 @@ public class ServicioOfertaEmpleo {
 
     @Transactional(readOnly = true)
     public List<OfertaEmpleoRespuestaPubDTO> listarVigentesFiltradas(String puesto, String orden, Double lat, Double lon) {
+        actualizarVigenciaAutomatica();
+
         List<OfertaEmpleo> ofertas;
 
         if ("distancia".equalsIgnoreCase(orden) && lat != null && lon != null) {
@@ -89,5 +94,23 @@ public class ServicioOfertaEmpleo {
         return ofertas.stream()
                 .map(MapeadorOfertaEmpleoPub::toDto)
                 .toList();
+    }
+
+    @Transactional
+    private void actualizarVigenciaAutomatica() {
+        LocalDate hoy = LocalDate.now();
+        List<OfertaEmpleo> ofertasVigentes = repositorioOfertaEmpleo.findByVigenteTrue();
+
+        boolean hayCambios = false;
+        for (OfertaEmpleo oferta : ofertasVigentes) {
+            if (oferta.getFechaCierre() != null && oferta.getFechaCierre().isBefore(hoy)) {
+                oferta.setVigente(false);
+                hayCambios = true;
+            }
+        }
+
+        if (hayCambios) {
+            repositorioOfertaEmpleo.saveAll(ofertasVigentes);
+        }
     }
 }
