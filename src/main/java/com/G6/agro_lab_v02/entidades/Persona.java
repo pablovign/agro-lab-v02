@@ -38,6 +38,9 @@ public class Persona {
     @Column(columnDefinition = "GEOGRAPHY(POINT, 4326)", nullable = false)
     private Point ubicacion;
 
+    @Column()
+    private String telefono;
+
     @ManyToOne
     @JoinColumn(name = "id_distrito", nullable = false)
     private Distrito distrito;
@@ -104,6 +107,14 @@ public class Persona {
 
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
+    }
+
+    public String getTelefono(){
+        return telefono;
+    }
+
+    public void setTelefono(String telefono){
+        this.telefono = telefono;
     }
 
     public Point getUbicacion() {
