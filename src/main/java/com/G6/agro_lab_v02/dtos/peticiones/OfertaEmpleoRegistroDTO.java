@@ -14,6 +14,7 @@ public class OfertaEmpleoRegistroDTO {
     private Integer idPuestoTrabajo;
 
     private Integer idEspecie;
+
     @NotNull(message = "Las cantidad de vacantes son obligatorias.")
     @Min(value = 1, message = "La cantidad de vacantes debe ser al menos una.")
     private Integer vacantes;

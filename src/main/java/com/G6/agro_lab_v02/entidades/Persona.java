@@ -38,7 +38,7 @@ public class Persona {
     @Column(columnDefinition = "GEOGRAPHY(POINT, 4326)", nullable = false)
     private Point ubicacion;
 
-    @Column()
+    @Column(length = 20, nullable = false)
     private String telefono;
 
     @ManyToOne

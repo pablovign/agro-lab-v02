@@ -1,5 +1,7 @@
 package com.G6.agro_lab_v02.dtos.respuestas;
 
+import com.G6.agro_lab_v02.entidades.Especie;
+
 import java.util.List;
 
 public class EstablecimientoRespuestaDTO {
@@ -10,12 +12,12 @@ public class EstablecimientoRespuestaDTO {
     private String codigoPostal;
     private String nombreDistrito;
     private String nombreDepartamento;
-    private List<String> especies;
+    private List<EspecieRespuestaDTO> especies;
     private double latitud;
     private double longitud;
 
     public EstablecimientoRespuestaDTO(Integer idEstablecimiento, String nombreEstablecimiento, String calle, String numeracion,
-                                       String codigoPostal, String nombreDistrito, String nombreDepartamento, List<String> especies,
+                                       String codigoPostal, String nombreDistrito, String nombreDepartamento, List<EspecieRespuestaDTO> especies,
                                        double latitud, double longitud) {
         this.idEstablecimiento = idEstablecimiento;
         this.nombreEstablecimiento = nombreEstablecimiento;
@@ -85,11 +87,11 @@ public class EstablecimientoRespuestaDTO {
         this.nombreDepartamento = nombreDepartamento;
     }
 
-    public List<String> getEspecies() {
+    public List<EspecieRespuestaDTO> getEspecies() {
         return especies;
     }
 
-    public void setEspecies(List<String> especies) {
+    public void setEspecies(List<EspecieRespuestaDTO> especies) {
         this.especies = especies;
     }
 

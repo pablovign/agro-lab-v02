@@ -1,6 +1,7 @@
 package com.G6.agro_lab_v02.dtos.mapeadores;
 
 import com.G6.agro_lab_v02.dtos.peticiones.EstablecimientoRegistroDTO;
+import com.G6.agro_lab_v02.dtos.respuestas.EspecieRespuestaDTO;
 import com.G6.agro_lab_v02.dtos.respuestas.EstablecimientoRespuestaDTO;
 import com.G6.agro_lab_v02.entidades.Distrito;
 import com.G6.agro_lab_v02.entidades.Empresa;
@@ -38,9 +39,9 @@ public class MapeadorEstablecimiento {
         String nombreDistrito = establecimiento.getDistrito().getNombreDistrito();
         String nombreDepartamento = establecimiento.getDistrito().getDepartamento().getNombreDepartamento();
 
-        List<String> especies = establecimiento.getEspecies()
+        List<EspecieRespuestaDTO> especies = establecimiento.getEspecies()
                 .stream()
-                .map(Especie::getNombreEspecie)
+                .map(MapeadorEspecie::toDto)
                 .toList();
 
         double latitud = 0;
