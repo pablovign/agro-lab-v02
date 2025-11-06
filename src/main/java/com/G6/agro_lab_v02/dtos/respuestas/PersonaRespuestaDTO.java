@@ -7,7 +7,6 @@ public class PersonaRespuestaDTO {
     private String apellido;
     private String calle;
     private String numeracion;
-    private String codigoPostal;
     private String telefono;
     private double latitud;
     private double longitud;
@@ -60,14 +59,6 @@ public class PersonaRespuestaDTO {
 
     public void setNumeracion(String numeracion) {
         this.numeracion = numeracion;
-    }
-
-    public String getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
     }
 
     public String getTelefono() {

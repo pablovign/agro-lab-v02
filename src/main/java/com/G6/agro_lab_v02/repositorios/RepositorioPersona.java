@@ -4,6 +4,9 @@ import com.G6.agro_lab_v02.entidades.Persona;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface RepositorioPersona extends JpaRepository<Persona, Integer> {
+    Optional<Persona> findByDni(String dni);
 }
