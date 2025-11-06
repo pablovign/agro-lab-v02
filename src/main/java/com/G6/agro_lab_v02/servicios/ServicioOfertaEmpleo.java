@@ -52,7 +52,7 @@ public class ServicioOfertaEmpleo {
         return MapeadorOfertaEmpleoPriv.toDto(guardada);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<OfertaEmpleoRespuestaPrivDTO> listarPorEmpresa(String cuit, Boolean vigente) {
         actualizarVigenciaAutomatica();
 
@@ -73,7 +73,7 @@ public class ServicioOfertaEmpleo {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<OfertaEmpleoRespuestaPubDTO> listarVigentesFiltradas(String puesto, String orden, Double lat, Double lon) {
         actualizarVigenciaAutomatica();
 
@@ -82,7 +82,7 @@ public class ServicioOfertaEmpleo {
         if ("distancia".equalsIgnoreCase(orden) && lat != null && lon != null) {
             ofertas = repositorioOfertaEmpleo.findVigentesOrderByDistancia(lat, lon);
         } else {
-            ofertas = repositorioOfertaEmpleo.findByVigenteTrueOrderByFechaCierreDesc();
+            ofertas = repositorioOfertaEmpleo.findByVigenteTrueOrderByFechaCierreAsc();
         }
 
         if (puesto != null && !puesto.isBlank()) {
@@ -97,7 +97,7 @@ public class ServicioOfertaEmpleo {
     }
 
     @Transactional
-    private void actualizarVigenciaAutomatica() {
+    public void actualizarVigenciaAutomatica() {
         LocalDate hoy = LocalDate.now();
         List<OfertaEmpleo> ofertasVigentes = repositorioOfertaEmpleo.findByVigenteTrue();
 

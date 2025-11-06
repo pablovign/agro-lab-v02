@@ -15,7 +15,7 @@ public interface RepositorioOfertaEmpleo extends JpaRepository<OfertaEmpleo, Int
 
     List<OfertaEmpleo> findByEstablecimiento_EmpresaAndVigenteTrue(Empresa empresa);
     @Query(value = """
-        SELECT oe.* 
+        SELECT oe.*
         FROM oferta_empleo oe
         JOIN establecimiento e ON oe.id_establecimiento = e.id_establecimiento
         WHERE oe.vigente = true
@@ -23,7 +23,7 @@ public interface RepositorioOfertaEmpleo extends JpaRepository<OfertaEmpleo, Int
         """, nativeQuery = true)
     List<OfertaEmpleo> findVigentesOrderByDistancia(@Param("lat") Double lat, @Param("lon") Double lon);
 
-    List<OfertaEmpleo> findByVigenteTrueOrderByFechaCierreDesc();
+    List<OfertaEmpleo> findByVigenteTrueOrderByFechaCierreAsc();
 
     List<OfertaEmpleo> findByVigenteTrue();
 }
