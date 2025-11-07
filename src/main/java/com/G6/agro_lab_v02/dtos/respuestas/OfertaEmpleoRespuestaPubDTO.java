@@ -24,6 +24,7 @@ public class OfertaEmpleoRespuestaPubDTO {
                                        double longitud) {
         this.idOfertaEmpleo = idOfertaEmpleo;
         this.nombreEstablecimiento = nombreEstablecimiento;
+        this.nombreEmpresa = nombreEmpresa;
         this.nombrePuestoTrabajo = nombrePuestoTrabajo;
         this.nombreEspecie = nombreEspecie;
         this.vacantes = vacantes;
@@ -46,6 +47,14 @@ public class OfertaEmpleoRespuestaPubDTO {
 
     public void setNombreEstablecimiento(String nombreEstablecimiento) {
         this.nombreEstablecimiento = nombreEstablecimiento;
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
     }
 
     public String getNombrePuestoTrabajo() {
