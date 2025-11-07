@@ -55,4 +55,11 @@ public class ManejadorGlobalExcepciones {
         body.put("error", "Ocurrió un error interno");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
+
+    @ExceptionHandler(IllegalStateBusinessException.class)
+    public ResponseEntity<Object> handleIllegalStateBusiness(IllegalStateBusinessException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
 }

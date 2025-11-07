@@ -36,6 +36,22 @@ public class ServicioPostulacion {
         OfertaEmpleo oferta = repositorioOfertaEmpleo.findById(dto.getIdOfertaEmpleo())
                 .orElseThrow(() -> new ResourceNotFoundException("Oferta no encontrada"));
 
+        if (Boolean.FALSE.equals(oferta.getVigente())) {
+            throw new IllegalStateException("No se puede postular a una oferta no vigente.");
+        }
+
+        LocalDate hoy = LocalDate.now();
+        if (oferta.getFechaCierre() != null && oferta.getFechaCierre().isBefore(hoy)) {
+            throw new IllegalStateException("La oferta ya está vencida.");
+        }
+
+        boolean yaPostulado = repositorioPostulacion
+                .existsByPersonaAndOfertaEmpleo(persona, oferta);
+
+        if (yaPostulado) {
+            throw new IllegalStateException("La persona ya se postuló a esta oferta.");
+        }
+
         OfertaEmpleoPersona postulacion = new OfertaEmpleoPersona();
         postulacion.setPersona(persona);
         postulacion.setOfertaEmpleo(oferta);
