@@ -12,6 +12,7 @@ public class MapeadorOfertaEmpleoPub {
         return new OfertaEmpleoRespuestaPubDTO(
                 oferta.getIdOfertaEmpleo(),
                 oferta.getEstablecimiento().getNombreEstablecimiento(),
+                oferta.getEstablecimiento().getEmpresa().getRazonSocial(),
                 oferta.getPuestoTrabajo().getNombrePuestoTrabajo(),
                 oferta.getEspecie() != null ? oferta.getEspecie().getNombreEspecie() : null,
                 oferta.getVacantes(),

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class OfertaEmpleoRespuestaPubDTO {
     private Integer idOfertaEmpleo;
     private String nombreEstablecimiento;
+    private String nombreEmpresa;
     private String nombrePuestoTrabajo;
     private String nombreEspecie;
     private Integer vacantes;
@@ -14,6 +15,7 @@ public class OfertaEmpleoRespuestaPubDTO {
 
     public OfertaEmpleoRespuestaPubDTO(Integer idOfertaEmpleo,
                                        String nombreEstablecimiento,
+                                       String nombreEmpresa,
                                        String nombrePuestoTrabajo,
                                        String nombreEspecie,
                                        Integer vacantes,
