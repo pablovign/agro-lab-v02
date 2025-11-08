@@ -1,6 +1,8 @@
 package com.G6.agro_lab_v02.servicios;
 
+import com.G6.agro_lab_v02.dtos.mapeadores.MapeadorPostulacion;
 import com.G6.agro_lab_v02.dtos.peticiones.PostulacionRegistroDTO;
+import com.G6.agro_lab_v02.dtos.respuestas.PostulacionRespuestaDTO;
 import com.G6.agro_lab_v02.entidades.OfertaEmpleo;
 import com.G6.agro_lab_v02.entidades.OfertaEmpleoPersona;
 import com.G6.agro_lab_v02.entidades.Persona;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ServicioPostulacion {
@@ -58,5 +61,16 @@ public class ServicioPostulacion {
         postulacion.setFechaAlta(LocalDateTime.now());
 
         repositorioPostulacion.save(postulacion);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostulacionRespuestaDTO> obtenerPostulacionesPorOferta(Integer idOfertaEmpleo) {
+        OfertaEmpleo oferta = repositorioOfertaEmpleo.findById(idOfertaEmpleo)
+                .orElseThrow(() -> new ResourceNotFoundException("Oferta de empleo no encontrada."));
+
+        return repositorioPostulacion.findByOfertaEmpleo(oferta)
+                .stream()
+                .map(MapeadorPostulacion::toDto)
+                .toList();
     }
 }
