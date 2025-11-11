@@ -2,6 +2,7 @@ package com.G6.agro_lab_v02.servicios;
 
 import com.G6.agro_lab_v02.dtos.mapeadores.MapeadorPersona;
 import com.G6.agro_lab_v02.dtos.peticiones.PersonaRegistroDTO;
+import com.G6.agro_lab_v02.dtos.respuestas.PersonaRespuestaDTO;
 import com.G6.agro_lab_v02.entidades.Distrito;
 import com.G6.agro_lab_v02.entidades.Persona;
 import com.G6.agro_lab_v02.excepciones.ResourceNotFoundException;
@@ -53,5 +54,11 @@ public class ServicioPersona {
             repositorioPersona.save(persona);
         }
         return persona;
+    }
+
+    public PersonaRespuestaDTO buscarPorDni(String dni) {
+        return repositorioPersona.findByDni(dni)
+                .map(MapeadorPersona::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró una persona con el DNI: " + dni));
     }
 }
