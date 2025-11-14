@@ -38,6 +38,7 @@ public class MapeadorPersona {
         dto.setApellido(persona.getApellido());
         dto.setCalle(persona.getCalle());
         dto.setNumeracion(persona.getNumeracion());
+        dto.setCodigoPostal(persona.getCodigoPostal());
         dto.setNombreDistrito(persona.getDistrito().getNombreDistrito());
         dto.setNombreDepartamento(persona.getDistrito().getDepartamento().getNombreDepartamento());
         dto.setTelefono(persona.getTelefono());
