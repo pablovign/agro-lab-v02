@@ -6,6 +6,7 @@ import com.G6.agro_lab_v02.dtos.respuestas.PostulacionRespuestaDTO;
 import com.G6.agro_lab_v02.entidades.OfertaEmpleo;
 import com.G6.agro_lab_v02.entidades.OfertaEmpleoPersona;
 import com.G6.agro_lab_v02.entidades.Persona;
+import com.G6.agro_lab_v02.excepciones.IllegalStateBusinessException;
 import com.G6.agro_lab_v02.excepciones.ResourceNotFoundException;
 import com.G6.agro_lab_v02.repositorios.RepositorioOfertaEmpleo;
 import com.G6.agro_lab_v02.repositorios.RepositorioOfertaEmpleoPersona;
@@ -52,7 +53,7 @@ public class ServicioPostulacion {
                 .existsByPersonaAndOfertaEmpleo(persona, oferta);
 
         if (yaPostulado) {
-            throw new IllegalStateException("La persona ya se postuló a esta oferta.");
+            throw new IllegalStateBusinessException("La persona ya se postuló a esta oferta.");
         }
 
         OfertaEmpleoPersona postulacion = new OfertaEmpleoPersona();
