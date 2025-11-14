@@ -22,6 +22,7 @@ public class MapeadorPersona {
         persona.setCalle(dto.getCalle());
         persona.setNumeracion(dto.getNumeracion());
         persona.setCodigoPostal(dto.getCodigoPostal());
+        persona.setCodigoPostal(dto.getCodigoPostal());
         persona.setUbicacion(ubicacion);
         persona.setTelefono(dto.getTelefono());
         persona.setDistrito(distrito);
