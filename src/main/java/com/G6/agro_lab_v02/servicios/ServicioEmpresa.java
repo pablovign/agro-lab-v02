@@ -1,6 +1,7 @@
 package com.G6.agro_lab_v02.servicios;
 
 import com.G6.agro_lab_v02.dtos.mapeadores.MapeadorEmpresa;
+import com.G6.agro_lab_v02.dtos.peticiones.EmpresaEdicionDTO;
 import com.G6.agro_lab_v02.dtos.peticiones.EmpresaRegistroDTO;
 import com.G6.agro_lab_v02.dtos.respuestas.EmpresaRespuestaDTO;
 import com.G6.agro_lab_v02.entidades.Empresa;
@@ -41,6 +42,16 @@ public class ServicioEmpresa {
     public EmpresaRespuestaDTO obtenerEmpresa(String cuit){
         Empresa empresa = repositorioEmpresa.findByCuit(cuit)
                 .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada."));
+        return MapeadorEmpresa.toDTO(empresa);
+    }
+
+    public EmpresaRespuestaDTO actualizarEmpresa(EmpresaEdicionDTO empresaEdicionDTO, String cuit){
+        Empresa empresa = repositorioEmpresa.findByCuit(cuit)
+                .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada"));
+
+        empresa.setRazonSocial(empresaEdicionDTO.getRazonSocial());
+        empresa.setContrasenia(passwordEncoder.encode(empresaEdicionDTO.getContrasenia()));
+
         return MapeadorEmpresa.toDTO(empresa);
     }
 }
