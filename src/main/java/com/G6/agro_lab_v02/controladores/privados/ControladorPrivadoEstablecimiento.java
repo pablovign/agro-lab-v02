@@ -38,4 +38,11 @@ public class ControladorPrivadoEstablecimiento {
         List<EstablecimientoRespuestaDTO> respuesta = servicioEstablecimiento.listarPorEmpresa(cuit);
         return ResponseEntity.ok(respuesta);
     }
+
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<EstablecimientoRespuestaDTO> cambiarEstado(@PathVariable Integer id, Authentication authentication) {
+        String cuit = authentication.getName();
+        EstablecimientoRespuestaDTO dto = servicioEstablecimiento.establecerFechaBaja(id, cuit);
+        return ResponseEntity.ok(dto);
+    }
 }
