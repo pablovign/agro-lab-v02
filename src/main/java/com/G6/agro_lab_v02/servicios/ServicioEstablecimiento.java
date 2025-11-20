@@ -14,6 +14,9 @@ import com.G6.agro_lab_v02.repositorios.RepositorioDistrito;
 import com.G6.agro_lab_v02.repositorios.RepositorioEmpresa;
 import com.G6.agro_lab_v02.repositorios.RepositorioEspecie;
 import com.G6.agro_lab_v02.repositorios.RepositorioEstablecimiento;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,5 +84,37 @@ public class ServicioEstablecimiento {
         repositorioEstablecimiento.save(establecimiento);
 
         return MapeadorEstablecimiento.toDto(establecimiento);
+    }
+
+    public EstablecimientoRespuestaDTO editarEstablecimiento(Integer id, EstablecimientoRegistroDTO dto, String cuitEmpresa) {
+        Establecimiento est = repositorioEstablecimiento.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Establecimiento no encontrado"));
+
+        if (!est.getEmpresa().getCuit().equals(cuitEmpresa)) {
+            throw new UnauthorizedException("No se pueden modificar establecimientos de otra empresa");
+        }
+
+        Distrito distrito = repositorioDistrito.findById(dto.getIdDistrito())
+                .orElseThrow(() -> new ResourceNotFoundException("Distrito no encontrado."));
+
+        List<Especie> especies = repositorioEspecie.findAllById(dto.getIdsEspecies());
+        if (especies.isEmpty()) {
+            throw new BadRequestException("Debe seleccionar al menos una especie válida.");
+        }
+
+        GeometryFactory gf = new GeometryFactory();
+        Point ubicacion = gf.createPoint(new Coordinate(dto.getLongitud(), dto.getLatitud()));
+        ubicacion.setSRID(4326);
+
+        est.setNombreEstablecimiento(dto.getNombreEstablecimiento());
+        est.setCalle(dto.getCalle());
+        est.setNumeracion(dto.getNumeracion());
+        est.setCodigoPostal(dto.getCodigoPostal());
+        est.setUbicacion(ubicacion);
+        est.setDistrito(distrito);
+
+        repositorioEstablecimiento.save(est);
+
+        return MapeadorEstablecimiento.toDto(est);
     }
 }

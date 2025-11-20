@@ -45,4 +45,13 @@ public class ControladorPrivadoEstablecimiento {
         EstablecimientoRespuestaDTO dto = servicioEstablecimiento.establecerFechaBaja(id, cuit);
         return ResponseEntity.ok(dto);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EstablecimientoRespuestaDTO> editarEstablecimiento(@PathVariable Integer id,
+                                                                             @RequestBody @Valid EstablecimientoRegistroDTO dto,
+                                                                             Authentication authentication) {
+        String cuit = authentication.getName();
+        EstablecimientoRespuestaDTO respuesta = servicioEstablecimiento.editarEstablecimiento(id, dto, cuit);
+        return ResponseEntity.ok(respuesta);
+    }
 }
