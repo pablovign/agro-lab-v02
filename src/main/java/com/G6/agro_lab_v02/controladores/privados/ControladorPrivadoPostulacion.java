@@ -24,11 +24,4 @@ public class ControladorPrivadoPostulacion {
         List<PostulacionRespuestaDTO> postulaciones = servicioPostulacion.obtenerPostulacionesPorOferta(id);
         return ResponseEntity.ok(postulaciones);
     }
-
-    @PutMapping("/{id}/baja")
-    public ResponseEntity<Void> darDeBaja(@PathVariable Integer id, Authentication authentication) {
-        String cuitEmpresa = authentication.getName();
-        servicioPostulacion.darDeBaja(id, cuitEmpresa);
-        return ResponseEntity.noContent().build();
-    }
 }

@@ -75,17 +75,4 @@ public class ServicioPostulacion {
                 .map(MapeadorPostulacion::toDto)
                 .toList();
     }
-
-    public void darDeBaja(Integer id, String cuitEmpresa) {
-        OfertaEmpleo oferta = repositorioOfertaEmpleo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Oferta no encontrada."));
-
-        if (!oferta.getEstablecimiento().getEmpresa().getCuit().equals(cuitEmpresa)) {
-            throw new UnauthorizedException("No se pueden modificar ofertas de otra empresa.");
-        }
-
-        oferta.setVigente(false);
-
-        repositorioOfertaEmpleo.save(oferta);
-    }
 }

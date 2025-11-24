@@ -7,6 +7,7 @@ import com.G6.agro_lab_v02.dtos.respuestas.OfertaEmpleoRespuestaPrivDTO;
 import com.G6.agro_lab_v02.dtos.respuestas.OfertaEmpleoRespuestaPubDTO;
 import com.G6.agro_lab_v02.entidades.*;
 import com.G6.agro_lab_v02.excepciones.ResourceNotFoundException;
+import com.G6.agro_lab_v02.excepciones.UnauthorizedException;
 import com.G6.agro_lab_v02.repositorios.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,5 +113,18 @@ public class ServicioOfertaEmpleo {
         if (hayCambios) {
             repositorioOfertaEmpleo.saveAll(ofertasVigentes);
         }
+    }
+
+    public void darDeBaja(Integer id, String cuitEmpresa) {
+        OfertaEmpleo oferta = repositorioOfertaEmpleo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Oferta no encontrada."));
+
+        if (!oferta.getEstablecimiento().getEmpresa().getCuit().equals(cuitEmpresa)) {
+            throw new UnauthorizedException("No se pueden modificar ofertas de otra empresa.");
+        }
+
+        oferta.setVigente(false);
+
+        repositorioOfertaEmpleo.save(oferta);
     }
 }

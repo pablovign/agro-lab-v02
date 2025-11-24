@@ -33,4 +33,11 @@ public class ControladorPrivadoOfertaEmpleo {
         List<OfertaEmpleoRespuestaPrivDTO> respuesta = servicioOfertaEmpleo.listarPorEmpresa(cuit, vigente);
         return ResponseEntity.ok(respuesta);
     }
+
+    @PutMapping("/{id}/baja")
+    public ResponseEntity<Void> darDeBaja(@PathVariable Integer id, Authentication authentication) {
+        String cuitEmpresa = authentication.getName();
+        servicioOfertaEmpleo.darDeBaja(id, cuitEmpresa);
+        return ResponseEntity.noContent().build();
+    }
 }
