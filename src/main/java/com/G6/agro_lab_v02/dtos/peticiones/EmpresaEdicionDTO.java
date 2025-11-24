@@ -4,11 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class EmpresaEdicionDTO {
-    @NotBlank(message = "La razón social es obligatoria.")
     @Size(max = 255, message = "La razón social no puede exceder los 255 caracteres.")
     private String razonSocial;
 
-    @NotBlank(message = "La contraseña es obligatoria.")
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres.")
     private String contrasenia;
 

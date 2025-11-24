@@ -8,6 +8,7 @@ import com.G6.agro_lab_v02.entidades.Empresa;
 import com.G6.agro_lab_v02.excepciones.BadRequestException;
 import com.G6.agro_lab_v02.excepciones.ResourceNotFoundException;
 import com.G6.agro_lab_v02.repositorios.RepositorioEmpresa;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,13 +46,26 @@ public class ServicioEmpresa {
         return MapeadorEmpresa.toDTO(empresa);
     }
 
+    @Transactional
     public EmpresaRespuestaDTO actualizarEmpresa(EmpresaEdicionDTO empresaEdicionDTO, String cuit){
         Empresa empresa = repositorioEmpresa.findByCuit(cuit)
                 .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada"));
 
-        empresa.setRazonSocial(empresaEdicionDTO.getRazonSocial());
-        empresa.setContrasenia(passwordEncoder.encode(empresaEdicionDTO.getContrasenia()));
+        //empresa.setRazonSocial(empresaEdicionDTO.getRazonSocial());
+        //empresa.setContrasenia(passwordEncoder.encode(empresaEdicionDTO.getContrasenia()));
 
-        return MapeadorEmpresa.toDTO(empresa);
+        String nuevaRazonSocial = empresaEdicionDTO.getRazonSocial();
+        if (nuevaRazonSocial != null && !nuevaRazonSocial.trim().isEmpty()) {
+            empresa.setRazonSocial(nuevaRazonSocial);
+        }
+
+        String nuevaContrasenia = empresaEdicionDTO.getContrasenia();
+        if (nuevaContrasenia != null && !nuevaContrasenia.trim().isEmpty()) {
+            empresa.setContrasenia(passwordEncoder.encode(nuevaContrasenia));
+        }
+
+        Empresa empresaActualizada = repositorioEmpresa.save(empresa);
+
+        return MapeadorEmpresa.toDTO(empresaActualizada);
     }
 }
