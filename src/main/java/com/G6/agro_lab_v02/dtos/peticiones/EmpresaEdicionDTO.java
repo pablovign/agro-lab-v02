@@ -1,6 +1,5 @@
 package com.G6.agro_lab_v02.dtos.peticiones;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class EmpresaEdicionDTO {
