@@ -51,18 +51,7 @@ public class ServicioEmpresa {
         Empresa empresa = repositorioEmpresa.findByCuit(cuit)
                 .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada"));
 
-        //empresa.setRazonSocial(empresaEdicionDTO.getRazonSocial());
-        //empresa.setContrasenia(passwordEncoder.encode(empresaEdicionDTO.getContrasenia()));
-
-        String nuevaRazonSocial = empresaEdicionDTO.getRazonSocial();
-        if (nuevaRazonSocial != null && !nuevaRazonSocial.trim().isEmpty()) {
-            empresa.setRazonSocial(nuevaRazonSocial);
-        }
-
-        String nuevaContrasenia = empresaEdicionDTO.getContrasenia();
-        if (nuevaContrasenia != null && !nuevaContrasenia.trim().isEmpty()) {
-            empresa.setContrasenia(passwordEncoder.encode(nuevaContrasenia));
-        }
+        empresa.setRazonSocial(empresaEdicionDTO.getRazonSocial());
 
         Empresa empresaActualizada = repositorioEmpresa.save(empresa);
 
