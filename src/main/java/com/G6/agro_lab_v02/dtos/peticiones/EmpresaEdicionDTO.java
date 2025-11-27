@@ -1,8 +1,10 @@
 package com.G6.agro_lab_v02.dtos.peticiones;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class EmpresaEdicionDTO {
+    @NotBlank(message = "La razón social es obligatoria.")
     @Size(max = 255, message = "La razón social no puede exceder los 255 caracteres.")
     private String razonSocial;
 
