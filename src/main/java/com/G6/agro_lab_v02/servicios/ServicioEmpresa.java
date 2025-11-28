@@ -53,6 +53,10 @@ public class ServicioEmpresa {
 
         empresa.setRazonSocial(empresaEdicionDTO.getRazonSocial());
 
+        if(empresaEdicionDTO.getContrasenia() != null){
+            empresa.setContrasenia(empresaEdicionDTO.getContrasenia());
+        }
+
         Empresa empresaActualizada = repositorioEmpresa.save(empresa);
 
         return MapeadorEmpresa.toDTO(empresaActualizada);
